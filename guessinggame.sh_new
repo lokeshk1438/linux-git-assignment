@@ -15,6 +15,13 @@ function entervl {
 		if [[ $numc -gt 1 ]]; then
 			echo "please enter only 1 number"
 			enterv
+		else
+			if [[ $numc -eq 1 ]]; then
+				guess
+			else
+				echo "value should be equal to 1 and no negative values"
+				entervl
+			fi
 		fi
 		echo "please enter numbers only"
 		enterv
@@ -32,7 +39,8 @@ function guess {
 		fi
 	entervl
 	done
-	echo "Yaay! your guess is correct $fcount"
+	#echo "Yaay! your guess is correct $fcount"
 }
 
 entervl
+echo "Yaay! your guess is correct $fcount"
