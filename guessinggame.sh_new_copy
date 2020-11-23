@@ -1,0 +1,41 @@
+#!/bin/bash
+
+function entervl {
+	echo "Please enter your guess"
+	read str
+	list=(str)	#storing input values in a list
+	num=($(echo ${str[*]} | xargs -n 1 | egrep "^[0-9]+$"))	#seperating only numbers
+	oth=($(echo ${str[*]} | xargs -n 1 | egrep "[^0-9]+"))	#seperating only other values
+	numc=$(echo ${#num[*]})		#calculating how many numbers are there
+	othc=$(echo ${#oth[*]})		#calculating how many non numbers are there
+	fcount=$(ls -al | awk '{print $9}' | egrep "[a-zA-Z_]" | wc -l)		#calculation no of lines in the pwd
+
+	if [[ othc -eq 0 ]]; then
+		if [[ numc -eq 1 ]]; then
+		pick=$(echo ${str[*]} | xargs -n 1 | egrep "^[0-9]+$" | head -1)
+		guess
+		else
+			echo "please enter only 1 value"
+			entervl
+		fi
+	else
+		echo "please enter values only"
+		entervl
+	fi
+}
+
+function guess {
+	while [[ $pick -ne $fcount ]]
+	do
+		if [[ $pick -gt $fcount ]]; then
+			echo "Too High"
+		else
+			echo "Too Low"
+		fi
+	entervl
+	done
+	#echo "Yaay! your guess is correct $fcount"
+}
+
+entervl
+echo "Yaay! your guess is correct $fcount"
